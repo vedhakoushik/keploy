@@ -329,13 +329,11 @@ func RemoveDoubleQuotes(tempMap map[string]interface{}) {
 	}
 }
 
-func DeleteFileIfNotExists(logger *zap.Logger, name string) (err error) {
-	//Check if file exists
+func DeleteFileIfExists(logger *zap.Logger, name string) (err error) {
 	_, err = os.Stat(name)
 	if os.IsNotExist(err) {
 		return nil
 	}
-	//If it does, remove it.
 	err = os.Remove(name)
 	if err != nil {
 		if runtime.GOOS == "windows" && strings.Contains(strings.ToLower(err.Error()), "used by another process") {
